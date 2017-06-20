@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Header, Content } from './components'
+import { Header, Content, DetailNews } from './components'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import axios from 'axios'
 
 class App extends Component {
@@ -28,28 +29,22 @@ class App extends Component {
       console.log(`oops, something error: ${error}`);
     })
 
-    // NOTE: List News Based on Source News
-    // axios.get(`https://newsapi.org/v1/articles?source=abc-news-au&apiKey=8b8441d3403c4f73896ea3b0e039595b`)
-    // .then(response => {
-    //   console.log('^^^^^^^^', response.data.articles);
-    //
-    //   self.setState({
-    //     listnews: response.data.articles
-    //   })
-    // })
-    // .catch(error => {
-    //   console.log(`oops, something error: ${error}`);
-    // })
-
   }
 
   render() {
     console.log(this.state);
     return (
-      <div>
-        <Header />
-        <Content sourcesnews={this.state.sourcesnews} />
-      </div>
+      <BrowserRouter>
+        <div>
+          <Header />
+          <Switch>
+            <Route exact path="/" render={ () => (
+              <Content sourcesnews={this.state.sourcesnews}></Content>
+            )} />
+            <Route exact path="/detailnews/:id" component={DetailNews} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

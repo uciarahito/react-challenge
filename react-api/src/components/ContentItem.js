@@ -15,7 +15,7 @@ class ContentItem extends React.Component {
           <div className="media-content">
             <div className="content">
               <p>
-                <strong>{item.title}</strong> <small>{item.publishedAt.slice(0, 10)}</small>
+                <strong>{item.title}</strong> <small>{item.publishedAt.slice(0, 10) || '-'}</small>
                 <br />
                 {item.description}
               </p>

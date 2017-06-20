@@ -10,38 +10,36 @@ class Content extends React.Component {
       listnews: [],
       source: ''
     }
+
+    this.sourceChange = this.sourceChange.bind(this)
+    this.fetchNewsBasedSource = this.fetchNewsBasedSource.bind(this)
   }
 
   sourceChange(e) {
-    // for (var i = 0; i < this.props.sources.length; i++) {
-    //   if (this.props.sources[i].id == e.target.value) {
-    //     this.props.source = this.props.sources[i]
-    //   }
-    // }
-    this.props.sourcesnews.map(source => {
-      console.log('((()))', source);
-      // if (source.id == e.target.value) {
-      //   this.state.source = source
-      // }
+    console.log('*** sources: **** ', e.target.value);
+    this.setState({
+      source: e.target.value
     })
   }
 
-  componentDidMount() {
+  fetchNewsBasedSource() {
     let self = this
 
     // NOTE: List News Based on Source News
-    axios.get(`https://newsapi.org/v1/articles?source=abc-news-au&apiKey=8b8441d3403c4f73896ea3b0e039595b`)
+    axios.get(`https://newsapi.org/v1/articles?source=${this.state.source}&apiKey=8b8441d3403c4f73896ea3b0e039595b`)
     .then(response => {
       console.log('^^^^^^^^', response.data.articles);
 
       self.setState({
         listnews: response.data.articles
       })
+      self.setState({
+        source: ''
+      })
     })
     .catch(error => {
       console.log(`oops, something error: ${error}`);
     })
-
   }
 
   render() {
@@ -52,18 +50,17 @@ class Content extends React.Component {
             <div className="field has-addons">
               <p className="control is-expanded">
                 <span className="select is-fullwidth">
-                  <select name="sources">
+                  <select name="sources" onChange={this.sourceChange}>
                     { this.props.sourcesnews.map(source => {
-                      console.log('--------------', source);
                       return (
-                        <option value={source.id}>{source.name}</option>
+                        <option value={source.id} key={source.id}>{source.name}</option>
                       )
                     })}
                   </select>
                 </span>
               </p>
               <p className="control">
-                <button type="submit" className="button is-primary">Choose</button>
+                <button type="submit" className="button is-primary" onClick={this.fetchNewsBasedSource}>Choose</button>
               </p>
             </div>
             <br />
