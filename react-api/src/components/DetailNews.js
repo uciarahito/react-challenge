@@ -22,15 +22,14 @@ class DetailNews extends React.Component {
     axios.get(`https://newsapi.org/v1/articles?source=${this.props.match.params.source}&apiKey=8b8441d3403c4f73896ea3b0e039595b`)
     .then(response => {
       console.log('^^^^^^^^', response.data.articles);
-      response.data.articles.map(article => {
-        self.setState({
+      response.data.articles.map(article => self.setState({
           title: article.title,
           description: article.description,
           url: article.url,
           urlToImage: article.urlToImage,
           publishedAt: article.publishedAt
         })
-      })
+      )
     })
     .catch(error => {
       console.log(`oops, something error: ${error}`);
@@ -38,7 +37,6 @@ class DetailNews extends React.Component {
   }
 
   render() {
-    const { id, source } = this.props.match.params
     return (
       <div className="columns is-mobile" style={{marginTop: 20}}>
         <div className="column is-10 is-offset-1">
@@ -47,14 +45,15 @@ class DetailNews extends React.Component {
             <article className="media">
               <div className="card-content" style={{padding:0}}>
                 <div className="media-content" style={{textAlign:'center'}}>
-                  <img src={this.state.urlToImage} alt="icon url image" />
+                  <img src={this.state.urlToImage} alt="urlimage balabala" style={{width:500}}/>
                 </div>
                 <hr />
-                <div class="content">
+                <div className="content">
                   <p>
                     <strong>{this.state.title}</strong>
                     <br />
-                    <h1><u>Description:</u> &nbsp; <i><small>{this.state.publishedAt.slice(0, 10) || '-'}</small></i></h1>
+                    <label><u>Description:</u> &nbsp; <i><small>{this.state.publishedAt ? this.state.publishedAt.slice(0, 10) : '-'}</small></i></label>
+                    <br />
                     {this.state.description}
                   </p>
                 </div>

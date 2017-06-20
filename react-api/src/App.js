@@ -38,9 +38,7 @@ class App extends Component {
         <div>
           <Header />
           <Switch>
-            <Route exact path="/" render={ () => (
-              <Content sourcesnews={this.state.sourcesnews}></Content>
-            )} />
+            <Route exact path="/" component={(props) => (<Content sourcesnews={this.state.sourcesnews} />)} />
             <Route exact path="/detailnews/:id/:source" component={DetailNews} />
           </Switch>
         </div>

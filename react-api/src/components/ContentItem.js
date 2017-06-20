@@ -11,17 +11,16 @@ class ContentItem extends React.Component {
         <article className="media">
           <div className="media-left">
             <figure className="image is-64x64">
-              <img src={item.urlToImage} alt="Icon" />
+              <img src={item.urlToImage} alt="icon urltoimage" />
             </figure>
           </div>
           <div className="media-content">
             <div className="content">
               <p>
                 <Link to={`/detailnews/${index}/${source}`}><strong>{item.title} </strong></Link>
-                <small>{item.publishedAt.slice(0, 10) || '-'}</small>
+                <small>{item.publishedAt ? item.publishedAt.slice(0, 10) : '-'}</small>
                 <br />
                 {item.description}
-                <h1>{source}</h1>
               </p>
             </div>
             <nav className="level is-mobile">
