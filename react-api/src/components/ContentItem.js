@@ -1,8 +1,10 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 class ContentItem extends React.Component {
   render() {
-    const { item } = this.props
+    const { item, index, source } = this.props
 
     return (
       <div className="box">
@@ -15,9 +17,11 @@ class ContentItem extends React.Component {
           <div className="media-content">
             <div className="content">
               <p>
-                <strong>{item.title}</strong> <small>{item.publishedAt.slice(0, 10) || '-'}</small>
+                <Link to={`/detailnews/${index}/${source}`}><strong>{item.title} </strong></Link>
+                <small>{item.publishedAt.slice(0, 10) || '-'}</small>
                 <br />
                 {item.description}
+                <h1>{source}</h1>
               </p>
             </div>
             <nav className="level is-mobile">

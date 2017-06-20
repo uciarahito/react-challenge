@@ -33,9 +33,9 @@ class Content extends React.Component {
       self.setState({
         listnews: response.data.articles
       })
-      self.setState({
-        source: ''
-      })
+      // self.setState({
+      //   source: ''
+      // })
     })
     .catch(error => {
       console.log(`oops, something error: ${error}`);
@@ -51,11 +51,9 @@ class Content extends React.Component {
               <p className="control is-expanded">
                 <span className="select is-fullwidth">
                   <select name="sources" onChange={this.sourceChange}>
-                    { this.props.sourcesnews.map(source => {
-                      return (
-                        <option value={source.id} key={source.id}>{source.name}</option>
-                      )
-                    })}
+                    { this.props.sourcesnews.map(source => (
+                      <option value={source.id} key={source.id}>{source.name}</option>
+                    ))}
                   </select>
                 </span>
               </p>
@@ -64,11 +62,9 @@ class Content extends React.Component {
               </p>
             </div>
             <br />
-            {this.state.listnews.map((item, index) => {
-              return (
-                <ContentItem item={item} key={index} />
-              )
-            })}
+            {this.state.listnews.map((item, index) => (
+              <ContentItem item={item} key={index} index={index} source={this.state.source}/>
+            ))}
           </div>
         </div>
       )
