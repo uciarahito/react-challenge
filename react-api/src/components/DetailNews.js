@@ -1,6 +1,12 @@
 import React from 'react'
+
 import axios from 'axios'
+
 import { Link } from 'react-router-dom'
+
+import { getAllNews, clearStateSource } from '../actions'
+
+import { connect } from 'react-redux'
 
 class DetailNews extends React.Component {
   constructor() {
@@ -15,23 +21,29 @@ class DetailNews extends React.Component {
   }
 
   componentDidMount() {
-    let self = this
-    console.log('apakah ini: ', this.props.match.params.source);
-    // NOTE: Detail News Based on Source News
-    axios.get(`https://newsapi.org/v1/articles?source=${this.props.match.params.source}&apiKey=8b8441d3403c4f73896ea3b0e039595b`)
-    .then(response => {
-      console.log('^^^^^^^^', response.data.articles);
-      response.data.articles.map(article => self.setState({
-          title: article.title,
-          description: article.description,
-          url: article.url,
-          urlToImage: article.urlToImage,
-          publishedAt: article.publishedAt
-        })
-      )
+    console.log('xxxxxx111xxxxx', this.props.match.params.source)
+    console.log('xxxxxx222xxxx', this.props.match.params.id)
+    console.log('xxxxxx333xxxx', this.props.newsList[3].title)
+
+    let index = this.props.match.params.id
+
+    this.setState({
+      title: this.props.newsList[this.props.match.params.id].title,
+      description: this.props.newsList[this.props.match.params.id].description,
+      url: this.props.newsList[this.props.match.params.id].url,
+      urlToImage: this.props.newsList[this.props.match.params.id].urlToImage,
+      publishedAt: this.props.newsList[this.props.match.params.id].publishedAt
     })
-    .catch(error => {
-      console.log(`oops, something error: ${error}`);
+  }
+
+  clearStateDetail() {
+    this.props.clearDataSource
+    this.setState({
+      title: '',
+      description: '',
+      url: '',
+      urlToImage: '',
+      publishedAt: ''
     })
   }
 
@@ -39,7 +51,7 @@ class DetailNews extends React.Component {
     return (
       <div className="columns is-mobile" style={{marginTop: 20}}>
         <div className="column is-10 is-offset-1">
-          <Link to="/"><span><u>back</u></span></Link>
+          <Link to="/"><span onClick={() => this.clearStateDetail()}><u>back</u></span></Link>
           <div className="box" style={{margin:20}}>
             <article className="media">
               <div className="card-content" style={{padding:0}}>
@@ -70,4 +82,23 @@ class DetailNews extends React.Component {
   }
 }
 
-export default DetailNews
+const mapStateToProps = ({news, source}) => {
+  console.log('!!!!!!!!', news.newsList.source)
+  return {
+    newsList: news.newsList.articles,
+    sourceText: news.newsList.source
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getNewsArticle: (source) => {
+      dispatch(getAllNews(source))
+    },
+    clearDataSource: () => {
+      dispatch(clearStateSource())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailNews)
