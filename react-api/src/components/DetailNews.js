@@ -21,10 +21,6 @@ class DetailNews extends React.Component {
   }
 
   componentDidMount() {
-    console.log('xxxxxx111xxxxx', this.props.match.params.source)
-    console.log('xxxxxx222xxxx', this.props.match.params.id)
-    console.log('xxxxxx333xxxx', this.props.newsList[3].title)
-
     let index = this.props.match.params.id
 
     this.setState({
@@ -83,7 +79,6 @@ class DetailNews extends React.Component {
 }
 
 const mapStateToProps = ({news, source}) => {
-  console.log('!!!!!!!!', news.newsList.source)
   return {
     newsList: news.newsList.articles,
     sourceText: news.newsList.source
