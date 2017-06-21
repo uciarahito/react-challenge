@@ -12,7 +12,6 @@ class DetailNews extends React.Component {
       urlToImage: '',
       publishedAt: ''
     }
-
   }
 
   componentDidMount() {

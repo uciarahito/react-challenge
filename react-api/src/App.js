@@ -1,44 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { Header, Content, DetailNews } from './components'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import axios from 'axios'
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      listnews: [],
-      sourcesnews: []
-    }
-  }
-
-  componentDidMount() {
-    let self = this
-
-    // NOTE: Get All Sources News
-    axios.get(`https://newsapi.org/v1/sources?languange=en`)
-    .then(response => {
-      console.log('^^^^^^^^', response.data.sources);
-
-      self.setState({
-        sourcesnews: response.data.sources
-      })
-    })
-    .catch(error => {
-      console.log(`oops, something error: ${error}`);
-    })
-
-  }
+class App extends React.Component {
 
   render() {
-    console.log(this.state);
     return (
       <BrowserRouter>
         <div>
           <Header />
           <Switch>
-            <Route exact path="/" component={(props) => (<Content sourcesnews={this.state.sourcesnews} />)} />
+            <Route exact path="/" component={Content} />
             <Route exact path="/detailnews/:id/:source" component={DetailNews} />
           </Switch>
         </div>

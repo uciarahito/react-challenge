@@ -3,6 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 class ContentItem extends React.Component {
+
   render() {
     const { item, index, source } = this.props
 
